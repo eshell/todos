@@ -1,14 +1,14 @@
 (function () {
     "use strict";
 
-    angular.module('ams-moguls').factory('TodoService', TodoService);
+    angular.module('todos').factory('TodoService', TodoService);
 
     TodoService.$inject = ['$http'];
 
     function TodoService($http) {
         var vm = {};
         vm.todos_api = '/api/todos';
-        vm.todos_delete_api = todos_delete;
+        vm.todos_delete_api = '/api/todos/delete/';
         vm.ENUMS = Object.freeze({
                 projects: {
                     AMS_MOGULS:'AMS_MOGULS',
@@ -49,7 +49,7 @@
             });
         };
         vm.deleteTodo = function(id){
-            $http.get(vm.todos_delete_api(id)).then(function(){
+            $http.get(vm.todos_delete_api + id).then(function () {
                 vm.init();
             }).catch(function(error){
                 console.log(error);
