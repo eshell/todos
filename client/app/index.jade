@@ -1,0 +1,61 @@
+doctype html
+html(ng-controller="RootCtrl as root")
+    head
+        base(href="/")
+
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="description" content="")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+
+        title {{root.title}}
+
+        link(rel="stylesheet" href="_lib/angular-material/angular-material.min.css")
+
+    body(ng-cloak='', layout="column")
+        md-toolbar
+            .md-toolbar-tools
+                a.md-button {{root.title}}
+
+        div(layout="row")
+            div(layout="column")
+                form(ng-submit="root._todos.addTodo(root.newTodo)", layout="column")
+                    md-input-container(flex)
+                        md-select-label.active.white-text project
+                        md-select(ng-model="root.newTodo.project", required)
+                            md-option(ng-repeat="(k,v) in root._todos.ENUMS.projects track by $index" value="{{v}}", selected="$first") {{k}}
+                    md-input-container(flex)
+                        md-select-label.active.white-text priority
+                        md-select(ng-model="root.newTodo.type", required)
+                            md-option(ng-repeat="(k,v) in root._todos.ENUMS.types track by $index" value="{{v}}", selected="$first") {{k}}
+                    md-input-container(flex)
+                        md-select-label.active.white-text type
+                        md-select(ng-model="root.newTodo.priority", required)
+                            md-option(ng-repeat="(k,v) in root._todos.ENUMS.priorities track by $index" value="{{v}}", selected="$first") {{k}}
+                    md-input-container(flex)
+                        label.active.white-text(for="todo") todo
+                        input#todo(ng-model="root.newTodo.todo", required)
+                    md-button(type="submit") Add
+
+
+            md-list
+                md-list-item(style="background:#fff;color:#00f") Todos: {{root._todos.todos.count}}
+                md-list-item(ng-repeat="item in root._todos.todos.list track by $index" ng-class='{"todo-high-priority": item.priority == "HIGH","todo-medium-priority":item.priority=="MEDIUM","todo-low-priority":item.priority=="LOW"}')
+                    |{{item.project}} - {{item.priority}} - {{item.type}} - {{item.todo}}
+                    span(flex)
+                    md-button(ng-click="root._todos.deleteTodo(item.id)") DELETE
+
+
+        script(src="_lib/angular/angular.js")
+        script(src="_lib/angular-material/angular-material.min.js")
+
+        script(src="_lib/angular-animate/angular-animate.min.js")
+        script(src="_lib/angular-aria/angular-aria.min.js")
+
+
+        script(src="_config/boot.js")
+        script(src="_services/todo-service.js")
+        script(src="_config/root.js")
+
+        script.
+            angular.bootstrap(document,['todos'],{strictDi:true});

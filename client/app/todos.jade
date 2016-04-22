@@ -1,0 +1,29 @@
+md-toolbar
+    md-button(ng-click="root.showTodos=!root.showTodos") Toggle todos
+
+div(layout="column", ng-if="root.showTodos")
+    form(ng-submit="root._todos.addTodo(root.newTodo)", layout="column")
+        md-input-container(flex)
+            md-select-label.active.white-text project
+            md-select(ng-model="root.newTodo.project", required)
+                md-option(ng-repeat="(k,v) in root._todos.ENUMS.projects track by $index" value="{{v}}", selected="$first") {{k}}
+        md-input-container(flex)
+            md-select-label.active.white-text priority
+            md-select(ng-model="root.newTodo.type", required)
+                md-option(ng-repeat="(k,v) in root._todos.ENUMS.types track by $index" value="{{v}}", selected="$first") {{k}}
+        md-input-container(flex)
+            md-select-label.active.white-text type
+            md-select(ng-model="root.newTodo.priority", required)
+                md-option(ng-repeat="(k,v) in root._todos.ENUMS.priorities track by $index" value="{{v}}", selected="$first") {{k}}
+        md-input-container(flex)
+            label.active.white-text(for="todo") todo
+            input#todo(ng-model="root.newTodo.todo", required)
+        md-button(type="submit") Add
+
+
+    md-list
+        md-list-item(style="background:#fff;color:#00f") Todos: {{root._todos.todos.count}}
+        md-list-item(ng-repeat="item in root._todos.todos.list track by $index" ng-class='{"todo-high-priority": item.priority == "HIGH","todo-medium-priority":item.priority=="MEDIUM","todo-low-priority":item.priority=="LOW"}')
+            |{{item.project}} - {{item.priority}} - {{item.type}} - {{item.todo}}
+            span(flex)
+            md-button(ng-click="root._todos.deleteTodo(item.id)") DELETE
