@@ -11,6 +11,7 @@ html(ng-controller="RootCtrl as root")
         title {{root.title}}
 
         link(rel="stylesheet" href="_lib/angular-material/angular-material.min.css")
+        link(rel="stylesheet" href="_css/app.css")
 
     body(ng-cloak='', layout="column")
         md-toolbar
@@ -18,7 +19,7 @@ html(ng-controller="RootCtrl as root")
                 a.md-button {{root.title}}
 
         div(layout="row")
-            div(layout="column")
+            div(layout="column", flex="33")
                 form(ng-submit="root._todos.addTodo(root.newTodo)", layout="column")
                     md-input-container(flex)
                         md-select-label.active.white-text project
@@ -38,7 +39,7 @@ html(ng-controller="RootCtrl as root")
                     md-button(type="submit") Add
 
 
-            md-list
+            md-list(flex)
                 md-list-item(style="background:#fff;color:#00f") Todos: {{root._todos.todos.count}}
                 md-list-item(ng-repeat="item in root._todos.todos.list track by $index" ng-class='{"todo-high-priority": item.priority == "HIGH","todo-medium-priority":item.priority=="MEDIUM","todo-low-priority":item.priority=="LOW"}')
                     |{{item.project}} - {{item.priority}} - {{item.type}} - {{item.todo}}
@@ -54,6 +55,7 @@ html(ng-controller="RootCtrl as root")
 
 
         script(src="_config/boot.js")
+        script(src="_config/config.js")
         script(src="_services/todo-service.js")
         script(src="_config/root.js")
 
