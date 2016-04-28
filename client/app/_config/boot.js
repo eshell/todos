@@ -1,7 +1,7 @@
 (function(){
     "use strict";
 
-    angular.module('todos',['ngAnimate','ngAria','ngMaterial']);
+    angular.module('todos', []);
 
 
 })();

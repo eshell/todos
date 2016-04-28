@@ -1,70 +1,60 @@
-<!DOCTYPE html>
-<html ng-controller="RootCtrl as root">
-<head>
+
+<!--app_production--><!DOCTYPE html>
+<html lang="en" ng-controller="RootCtrl as root">
+  <head>
     <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{root.title}}</title>
-    <link rel="stylesheet" href="_lib/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="_lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="_css/app.css">
-</head>
-<body ng-cloak="" layout="column">
-<md-toolbar>
-    <div class="md-toolbar-tools"><a class="md-button">{{root.title}}</a></div>
-</md-toolbar>
-<div layout="row">
-    <div layout="column" flex="33">
-        <form ng-submit="root._todos.addTodo(root.newTodo)" layout="column">
-            <md-input-container flex>
-                <md-select-label class="active white-text">project</md-select-label>
-                <md-select ng-model="root.newTodo.project" required>
-                    <md-option ng-repeat="(k,v) in root._todos.ENUMS.projects track by $index" value="{{v}}"
-                               selected="$first">{{k}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container flex>
-                <md-select-label class="active white-text">priority</md-select-label>
-                <md-select ng-model="root.newTodo.type" required>
-                    <md-option ng-repeat="(k,v) in root._todos.ENUMS.types track by $index" value="{{v}}"
-                               selected="$first">{{k}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container flex>
-                <md-select-label class="active white-text">type</md-select-label>
-                <md-select ng-model="root.newTodo.priority" required>
-                    <md-option ng-repeat="(k,v) in root._todos.ENUMS.priorities track by $index" value="{{v}}"
-                               selected="$first">{{k}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container flex><label for="todo" class="active white-text">todo</label><input id="todo"
-                                                                                                    ng-model="root.newTodo.todo"
-                                                                                                    required>
-            </md-input-container>
-            <md-button type="submit">Add</md-button>
-        </form>
+  </head>
+  <body ng-cloak="">
+    <nav class="navbar navbar-light bg-info"><a href="/" class="navbar-brand">{{root.title}}</a></nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <form ng-submit="root._todos.addTodo(root.newTodo)">
+            <div class="form-group">
+              <label for="project">project</label>
+              <select id="project" ng-model="root.newTodo.project">
+                <option ng-repeat="(k,v) in root._todos.ENUMS.projects track by $index" value="{{v}}" selected="$first">{{k}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="type">type</label>
+              <select id="type" ng-model="root.newTodo.type">
+                <option ng-repeat="(k,v) in root._todos.ENUMS.types track by $index" value="{{v}}" selected="$first">{{k}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="priority">priority</label>
+              <select id="priority" ng-model="root.newTodo.priority">
+                <option ng-repeat="(k,v) in root._todos.ENUMS.priorities track by $index" value="{{v}}" selected="$first">{{k}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="todo">todo</label>
+              <input id="todo" ng-model="root.newTodo.todo">
+            </div>
+            <button type="submit" class="btn btn-primary col-xs-12">Add</button>
+          </form>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <ul class="list-group">
+            <li class="list-group-item"><span class="label label-pill label-info">Todos: {{root._todos.todos.count}}</span></li>
+            <li ng-repeat="item in root._todos.todos.list track by $index" ng-class="{'bg-danger':item.priority=='HIGH','bg-success':item.priority=='LOW'}" class="list-group-item">{{item.project}} - {{item.priority}} - {{item.type}} - {{item.todo}}<span ng-click="root._todos.deleteTodo(item.id)" class="label label-pill label-default needs-cursor pull-xs-right">delete</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <md-list flex>
-        <md-list-item style="background:#fff;color:#00f">Todos: {{root._todos.todos.count}}</md-list-item>
-        <md-list-item ng-repeat="item in root._todos.todos.list track by $index"
-                      ng-class="{&quot;todo-high-priority&quot;: item.priority == &quot;HIGH&quot;,&quot;todo-medium-priority&quot;:item.priority==&quot;MEDIUM&quot;,&quot;todo-low-priority&quot;:item.priority==&quot;LOW&quot;}">
-            {{item.project}} - {{item.priority}} - {{item.type}} - {{item.todo}}<span flex></span>
-            <md-button ng-click="root._todos.deleteTodo(item.id)">DELETE</md-button>
-        </md-list-item>
-    </md-list>
-</div>
-<script src="_lib/angular/angular.js"></script>
-<script src="_lib/angular-material/angular-material.min.js"></script>
-<script src="_lib/angular-animate/angular-animate.min.js"></script>
-<script src="_lib/angular-aria/angular-aria.min.js"></script>
-<script src="_config/boot.js"></script>
-<script src="_config/config.js"></script>
-<script src="_services/todo-service.js"></script>
-<script src="_config/root.js"></script>
-<script>angular.bootstrap(document, ['todos'], {strictDi: true});</script>
-</body>
+    <script src="_lib/angular/angular.min.js"></script>
+    <script src="_lib/jquery/dist/jquery.min.js"></script>
+    <script src="_lib/tether/dist/js/tether.min.js"></script>
+    <script src="_lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="_dist/app.min.js"></script>
+    <script>angular.bootstrap(document,['todos'],{strictDi:true});</script>
+  </body>
 </html>

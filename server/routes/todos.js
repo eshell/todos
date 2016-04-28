@@ -11,12 +11,12 @@ route.get('/init',function(req,res){
     Todos.sync({force:true});
     res.send('OK');
 });
+
 route.get('/delete/:id',function(req,res){
     "use strict";
-    Todos.destroy({where:{id:req.params.id}}).then(function(){
-        res.sendStatus(200).send("OK");
-    }).catch(function(error){
-        res.status(400).send(error);
+    Todos.destroy({where: {id: req.params.id}}).then(function () {
+        res.end();
+
     });
 });
 
@@ -40,7 +40,7 @@ route.post('/',function(req,res){
             });
     }else{
         console.log('empty');
-        res.status(400).send("empty");
+        res.sendStatus(400);
     }
 });
 

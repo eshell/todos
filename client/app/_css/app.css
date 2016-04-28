@@ -25,3 +25,7 @@
 .todo-low-priority {
     background: #00fa00;
 }
+
+.needs-cursor {
+    cursor: pointer;
+}
